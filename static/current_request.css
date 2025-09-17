@@ -1,0 +1,118 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #D9D9D9;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #1A408A;
+}
+
+.home-icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 20px;
+}
+
+.star-inf {
+    display: flex;
+    width: 100%;
+    gap: 25px;
+    margin-top: 25px;
+    margin-left: 100px; 
+    align-items: center;
+}
+
+.star-name, .star-cons {
+    padding: 7.5px 18.75px;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 25px;
+    font-size: 14px;
+    border: none;
+    background-color: #1A408A;
+    color: #D9D9D9;
+}
+
+.scope-container {
+    display: flex;
+    align-items: flex-start;
+    margin: 30px 0;
+}
+
+.scope-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    width: 100%;
+}
+
+.scope-item {
+    display: flex;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+.scope-card {
+    width: 100%;
+    padding: 22px;
+    background-color: #1A408A;
+    border-radius: 25px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Равномерное распределение */
+}
+
+.scope-content {
+    display: flex;
+    align-items: center;
+    flex: 1; /* Занимает доступное пространство */
+}
+
+.scope-image {
+    width: 150px;
+    height: 120px;
+    background-color: #D9D9D9;
+    border-radius: 15px;
+    flex-shrink: 0;
+    margin-right: 30px;
+}
+
+.scope-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    white-space: nowrap; /* Запрет переноса текста */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Многоточие при переполнении */
+    max-width: 300px; /* Максимальная ширина заголовка */
+}
+
+.inputs-container {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-shrink: 0; /* Запрет сжатия */
+    margin-left: auto; /* Прижимаем к правому краю */
+}
+
+.val-inp, .res-inp {
+    padding: 10px 15px;
+    border: 1px solid #1A408A;
+    border-radius: 25px;
+    background-color: #A5A5A5;
+    color: #000000;
+    width: 200px;
+    font-size: 14px;
+    height: 85px;
+    flex-shrink: 0; /* Запрет изменения размеров */
+}

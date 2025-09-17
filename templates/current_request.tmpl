@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ .Title }}</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Mono:wght@400&display=swap"/>
+    <link rel="stylesheet" href="/static/current_request.css">
+</head>
+<body>
+    <div class="header">    
+        <a href="/home">
+            <img class="home-icon" src="http://127.0.0.1:9000/vedro/home.png" alt="Домой" />
+        </a>
+    </div>
+    <div class="star-inf">
+        <div class="star-name">Звезда: {{.current_star.Name}}</div>
+        <div class="star-cons">Созвездие: {{.current_star.Constellation}}</div>
+    </div>
+    <div class="scope-container">
+        <ul class="scope-list">
+            {{ range .current_scope }}
+            <li class="scope-item">
+                <div class="scope-card">
+                    <div class="scope-content">
+                        <img class="scope-image" src="{{ .ImgLink }}" alt="{{ .Name }}">
+                        <div class="scope-title">{{ .Name }}</div>
+                    </div>
+                    <div class="inputs-container">
+                        {{ $calc := index $.calcMap .ID }}
+                        <input class="val-inp" type="text" 
+                               value="{{ if $calc }}{{ $calc.InpVal }}{{ end }}" 
+                               placeholder="Введите значение">
+                        <input class="res-inp" type="text" 
+                               value="{{ if $calc }}{{ $calc.ResVal }}{{ end }}" 
+                               placeholder="Результат">
+                    </div>
+                </div>
+            </li>
+            {{ end }}
+        </ul>
+    </div>
+</body>
+</html>
