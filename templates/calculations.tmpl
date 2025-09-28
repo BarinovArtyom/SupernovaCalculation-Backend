@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ .Title }}</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Mono:wght@400&display=swap"/>
+    <link rel="stylesheet" href="/static/calculations.css">
+</head>
+<body>
+    <div class="header">    
+        <a href="/scopes">
+            <img class="home-icon" src="http://127.0.0.1:9000/vedro/home.png" alt="Домой" />
+        </a>
+    </div>
+    <div class="star-inf">
+        <div class="star-name">Звезда: {{.current_star.Name}}</div>
+        <div class="star-cons">Созвездие: {{.current_star.Constellation}}</div>
+    </div>
+    <div class="scope-container">
+        <ul class="scope-list">
+            {{ range .scopes }}
+            <li class="scope-item">
+                <div class="scope-card">
+                    <div class="scope-content">
+                        <img class="scope-image" src="{{ .ImgLink }}" alt="{{ .Name }}">
+                        <div class="scope-title">{{ .Name }}</div>
+                    </div>
+                    <div class="inputs-container">
+                        <input class="val-inp" type="text" value="{{ .Calc.InpMass }} {{ .Calc.InpTexp }} {{ .Calc.InpDist }}" placeholder="Введите значение">
+                        <input class="res-inp" type="text" value="{{ .Calc.ResEn}} {{ .Calc.ResNi }}" placeholder="Результат">
+                    </div>
+                </div>
+            </li>
+            {{ end }}
+        </ul>
+    </div>
+    <div class="buttons-container">
+        <form action="/deletestar" method="POST" class="delete-form" onsubmit="return confirm('Удалить заявку?')">
+            <input type="hidden" name="star_id" value="{{ .current_star.ID }}">
+            <button type="submit" class="action-button delete-button">Удалить заявку</button>
+        </form>
+    </div>
+</body>
+</html>

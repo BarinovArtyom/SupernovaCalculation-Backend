@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ .Title }}</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Mono:wght@400&display=swap"/>
+    <link rel="stylesheet" href="/static/scopes.css">
+</head>
+<body>
+    <div class="header">    
+        <a href="/scopes">
+        <img class="home-icon" src="http://127.0.0.1:9000/vedro/home.png" alt="Домой" />
+        </a>
+    </div>
+    <div class="search-section">
+        <form action="/scopes" method="GET">
+            <input type="text" name="search" class="field-search-text" placeholder="Поиск" value="{{ .query }}">
+        </form>
+    </div>
+    <div class="scope-container">
+        <ul class="scope-list">
+            {{ range .Scopes }}
+            <li class="scope-item">
+                <div class="scope-card">
+                    <div class="scope-content">
+                        <div class="scope-title">{{ .Name }}</div>
+                        <div class="scope-description">{{ .Description }}</div>
+                        <div class="scope-buttons">
+                            <a href="/specifications/{{ .ID }}" class="details-button">Подробнее</a>
+                            <form action="/addtostar" method="POST" class="order-form">
+                                <input type="hidden" name="scope_id" value="{{ .ID }}">
+                                <button type="submit" class="order-button">Добавить</button>
+                            </form>
+                        </div>
+                    </div>
+                    <img class="scope-image" src="{{ .ImgLink }}" alt="{{ .Name }}">
+                </div>
+            </li>
+            {{ end }}
+        </ul>
+    </div>
+    {{ if gt .Star_ID 0 }}
+    <div class="cart-icon-container">
+        <a href="/calculations/{{ .Star_ID }}">
+            <img class="cart-icon" src="http://127.0.0.1:9000/vedro/cart.png" alt="Расчеты" />
+            {{ if gt .CalcCount 0 }}
+            <div class="cart-badge">{{ .CalcCount }}</div>
+            {{ end }}
+        </a>
+    </div>
+    {{ end }}
+</body>
+</html>
