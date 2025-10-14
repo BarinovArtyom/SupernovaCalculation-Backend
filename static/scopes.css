@@ -1,0 +1,179 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #D9D9D9;
+    margin: 0;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #1A408A;
+}
+
+.home-icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 20px;
+}
+
+.search-section {
+    display: flex;
+    justify-content: center; 
+    padding: 20px; 
+}
+
+.field-search-text {
+    width: 975px; 
+    padding: 10px 20px;
+    border-radius: 25px;
+    border: none;
+    outline: none;
+    background-color: #1A408A;
+    color: #D9D9D9;
+    font-size: 14px;
+}
+
+.scope-container {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+}
+
+.scope-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.scope-item {
+    display: flex;
+    justify-content: center;
+}
+
+.scope-card {
+    width: 450px; /* Увеличено на 50% */
+    height: auto; /* Увеличено на 50% */
+    padding: 22px;
+    background-color: #1A408A;
+    border-radius: 25px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    color: #D9D9D9;
+    display: flex;
+    justify-content: space-between; /* Разделяем текст и картинку по горизонтали */
+    align-items: flex-start; /* Прижимаем контент к верхней части */
+}
+
+.scope-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Текст прилипает к верху */
+    flex: 1;
+}
+
+.scope-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.scope-code,
+.scope-description {
+    margin-top: 0;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.scope-image {
+    width: 150px;
+    height: 120px;
+    background-color: #D9D9D9;
+    border-radius: 15px;
+    flex-shrink: 0;
+    margin-left: 30px; /* Отступ слева от текста */
+}
+
+.scope-buttons-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Прижимаем кнопки к низу карточки */
+    align-items: center;
+    height: 100%; /* Занимаем всю высоту карточки */
+}
+
+.scope-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.order-button,
+.details-button {
+    padding: 7.5px 18.75px;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 7.5px;
+    font-size: 14px;
+    border: none;
+}
+
+.order-button {
+    background-color: #525252;
+    color: #D9D9D9;
+}
+
+.details-button {
+    background-color: #525252;
+    color: #D9D9D9;
+}
+
+.cart-icon-container {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+}
+
+.cart-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #1A408A;
+    padding: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    position: relative; /* Чтобы позиционировать значок внутри */
+}
+
+.cart-badge {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    background-color: #ababab;
+    color: #1A408A;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Стили для активной корзины */
+.cart-icon-container .cart-icon {
+    background-color: #1A408A;
+}
+
+/* Стили для неактивной корзины (starID = 0) */
+.cart-icon-container.cart-disabled .cart-icon {
+    background-color: #6b6b6b; /* Серый цвет */
+    opacity: 0.7;
+}
+
+.cart-icon-container.cart-disabled .cart-badge {
+    background-color: #8d8d8d;
+    color: #4a4a4a;
+}

@@ -1,0 +1,793 @@
+basePath: /
+definitions:
+  ds.Calc:
+    properties:
+      inp_dist:
+        type: number
+      inp_mass:
+        type: number
+      inp_texp:
+        type: number
+      res_en:
+        type: number
+      res_ni:
+        type: number
+      scope_id:
+        type: integer
+      star_id:
+        type: integer
+    type: object
+  ds.Scope:
+    properties:
+      delta_lamb:
+        type: number
+      description:
+        type: string
+      filter:
+        type: string
+      id:
+        type: integer
+      img_link:
+        type: string
+      lambda:
+        type: number
+      name:
+        type: string
+      status:
+        type: boolean
+      zero_point:
+        type: number
+    type: object
+  ds.Star:
+    properties:
+      constellation:
+        type: string
+      creation_date:
+        type: string
+      finish_date:
+        type: string
+      form_date:
+        type: string
+      id:
+        type: integer
+      mod_id:
+        type: integer
+      name:
+        type: string
+      status:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  ds.Users:
+    properties:
+      id:
+        type: integer
+      login:
+        type: string
+      mod_status:
+        $ref: '#/definitions/role.Role'
+      password:
+        type: string
+    type: object
+  handler.loginReq:
+    properties:
+      guest:
+        type: boolean
+      login:
+        type: string
+      password:
+        type: string
+    required:
+    - guest
+    - login
+    - password
+    type: object
+  handler.loginResp:
+    properties:
+      access_token:
+        type: string
+      expires_in:
+        type: string
+      login:
+        type: string
+      role:
+        $ref: '#/definitions/role.Role'
+      token_type:
+        type: string
+    required:
+    - access_token
+    - expires_in
+    - login
+    - role
+    - token_type
+    type: object
+  handler.registerReq:
+    properties:
+      login:
+        type: string
+      password:
+        type: string
+    required:
+    - login
+    - password
+    type: object
+  handler.registerResp:
+    properties:
+      ok:
+        type: boolean
+    required:
+    - ok
+    type: object
+  role.Role:
+    enum:
+    - 0
+    - 1
+    - 2
+    type: integer
+    x-enum-comments:
+      Guest: "0"
+      Moderator: "2"
+      User: "1"
+    x-enum-descriptions:
+    - "0"
+    - "1"
+    - "2"
+    x-enum-varnames:
+    - Guest
+    - User
+    - Moderator
+host: 127.0.0.1
+info:
+  contact:
+    email: Barinovartem383@gmail.com
+    name: API Support
+    url: https://vk.com/aaaaaaeaaaa
+  description: Bmstu Open IT Platform
+  license:
+    name: AS IS (NO WARRANTY)
+  title: Energy Calculation System
+  version: "1.0"
+paths:
+  /calc/delete/{star_id}/{scope_id}:
+    delete:
+      description: Delete calculation from user's star. If no calculations remain,
+        the star is deleted.
+      parameters:
+      - description: Star ID
+        in: path
+        name: star_id
+        required: true
+        type: string
+      - description: Scope ID
+        in: path
+        name: scope_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Delete calculation from star
+      tags:
+      - Calc
+  /calc/edit/{star_id}/{scope_id}:
+    put:
+      description: Update calculation parameters in user's star
+      parameters:
+      - description: Star ID
+        in: path
+        name: star_id
+        required: true
+        type: string
+      - description: Scope ID
+        in: path
+        name: scope_id
+        required: true
+        type: string
+      - description: Calculation parameters
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/ds.Calc'
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Edit calculation in star
+      tags:
+      - Calc
+  /scope/{id}:
+    get:
+      description: Get detailed information about specific scope
+      parameters:
+      - description: Scope ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: HTML page
+          schema:
+            type: string
+      summary: Get scope by ID
+      tags:
+      - Scope
+  /scope/add:
+    post:
+      description: Create new scope (moderator only)
+      parameters:
+      - description: Scope data
+        in: body
+        name: scope
+        required: true
+        schema:
+          $ref: '#/definitions/ds.Scope'
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/ds.Scope'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Add new scope
+      tags:
+      - Scope
+  /scope/addpicture/{id}:
+    post:
+      description: Upload image for scope (moderator only)
+      parameters:
+      - description: Scope ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Scope image
+        in: formData
+        name: image
+        required: true
+        type: file
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Add scope picture
+      tags:
+      - Scope
+  /scope/addtostar:
+    post:
+      description: Add scope to current user's active star
+      parameters:
+      - description: Scope ID
+        in: formData
+        name: scope_id
+        required: true
+        type: string
+      responses:
+        "303":
+          description: Redirect to /scopes
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Add scope to star
+      tags:
+      - Scope
+  /scope/delete/{id}:
+    delete:
+      description: Delete scope and its image (moderator only)
+      parameters:
+      - description: Scope ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Delete scope
+      tags:
+      - Scope
+  /scope/edit/{id}:
+    put:
+      description: Update scope information (moderator only)
+      parameters:
+      - description: Scope ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Scope data
+        in: body
+        name: scope
+        required: true
+        schema:
+          $ref: '#/definitions/ds.Scope'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ds.Scope'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Edit scope
+      tags:
+      - Scope
+  /scopes:
+    get:
+      description: Get all scopes with optional search filter
+      parameters:
+      - description: Search query
+        in: query
+        name: search
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: HTML page
+          schema:
+            type: string
+      summary: Get scopes list
+      tags:
+      - Scope
+  /star/{id}:
+    get:
+      description: Get detailed star information with all scope calculations
+      parameters:
+      - description: Star ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: HTML page
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get star with calculations
+      tags:
+      - Star
+  /star/active:
+    get:
+      description: Get current user's active star ID and calculation count
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get active star info
+      tags:
+      - Star
+  /star/delete/{id}:
+    delete:
+      description: Delete star and redirect to scopes page
+      parameters:
+      - description: Star ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "303":
+          description: Redirect to /scopes
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Delete star
+      tags:
+      - Star
+  /star/edit/{id}:
+    put:
+      description: Update star name and constellation
+      parameters:
+      - description: Star ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Star data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/ds.Star'
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Edit star
+      tags:
+      - Star
+  /star/finish/{id}:
+    put:
+      description: Complete or deny star (moderator only)
+      parameters:
+      - description: Star ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: 'Status: completed or denied'
+        in: body
+        name: input
+        required: true
+        schema:
+          additionalProperties:
+            type: string
+          type: object
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "409":
+          description: Conflict
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Finish star
+      tags:
+      - Star
+  /star/form/{id}:
+    put:
+      description: Change star status to formed and update calculations
+      parameters:
+      - description: Star ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Calculation values
+        in: formData
+        name: calc_values_{scope_id}
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Form star
+      tags:
+      - Star
+  /stars:
+    get:
+      description: |-
+        Get stars with role-based access control.
+        - Moderators (modstatus=2): see all stars except "active" and "deleted" statuses
+        - Users (modstatus=1): see only their own stars except "active" and "deleted" statuses
+        - Guests (modstatus=0): access denied (401)
+      parameters:
+      - description: Status filter (applies to non-active, non-deleted stars)
+        in: query
+        name: status
+        type: string
+      - description: Start date filter (2006-Jan-02)
+        in: query
+        name: start_date
+        type: string
+      - description: End date filter (2006-Jan-02)
+        in: query
+        name: end_date
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ds.Star'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "403":
+          description: Forbidden
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get stars list
+      tags:
+      - Star
+  /user/edit:
+    put:
+      description: Update current user profile (login and password)
+      parameters:
+      - description: User data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/ds.Users'
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Update user
+      tags:
+      - User
+  /user/login:
+    post:
+      consumes:
+      - application/json
+      description: very very friendly response
+      parameters:
+      - description: user data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/handler.loginReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.loginResp'
+        "403":
+          description: Forbidden
+      summary: Login the specified user
+      tags:
+      - User
+  /user/logout:
+    post:
+      description: Logout user and blacklist JWT token
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: User logout
+      tags:
+      - User
+  /user/profile:
+    get:
+      description: Get current user profile information
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get user profile
+      tags:
+      - User
+  /user/register:
+    post:
+      description: Register new user account
+      parameters:
+      - description: Registration data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/handler.registerReq'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.registerResp'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: User registration
+      tags:
+      - User
+schemes:
+- http
+swagger: "2.0"

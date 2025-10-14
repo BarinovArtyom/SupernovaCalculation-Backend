@@ -1,0 +1,14 @@
+ServiceHost = "0.0.0.0"
+ServicePort = 80 
+
+[minio]
+user = "minio"
+pass = "minio124"
+endpoint = "127.0.0.1:9000"
+
+# НАСТРОЙКИ Redis
+[Redis]
+
+# Таймауты в миллисекундах
+DialTimeout = "10s"
+ReadTimeout = "10s"
