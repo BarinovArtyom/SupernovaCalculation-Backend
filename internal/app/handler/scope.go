@@ -43,8 +43,7 @@ func (h *Handler) GetScopes(ctx *gin.Context) {
 		calccount = 0
 	}
 
-	ctx.HTML(http.StatusOK, "scopes.tmpl", gin.H{
-		"Title":     "Scopes",
+	ctx.JSON(http.StatusOK, gin.H{
 		"Scopes":    scopes,
 		"Star_ID":   star_id,
 		"CalcCount": calccount,
@@ -66,8 +65,7 @@ func (h *Handler) GetScopeByID(ctx *gin.Context) {
 		logrus.Error(err)
 	}
 
-	ctx.HTML(http.StatusOK, "specs.tmpl", gin.H{
-		"Title": specs.Name,
+	ctx.JSON(http.StatusOK, gin.H{
 		"Specs": specs,
 	})
 }

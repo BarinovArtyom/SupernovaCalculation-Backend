@@ -53,12 +53,6 @@ func (h *Handler) RegisterHandler(router *gin.Engine) {
 	router.PUT("/user/edit", h.UpdateUser)        // PUT пользователя (личный кабинет)
 }
 
-// RegisterStatic То же самое, что и с маршрутами, регистрируем статику
-func (h *Handler) RegisterStatic(router *gin.Engine) {
-	router.LoadHTMLGlob("templates/*")
-	router.Static("/static", "./static")
-}
-
 // errorHandler для более удобного вывода ошибок
 func (h *Handler) errorHandler(ctx *gin.Context, errorStatusCode int, err error) {
 	logrus.Error(err.Error())

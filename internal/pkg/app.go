@@ -28,7 +28,6 @@ func NewApp(c *config.Config, r *gin.Engine, l *logrus.Logger, h *handler.Handle
 func (a *Application) RunApp() {
 	a.Logger.Info("Server start up")
 	a.Handler.RegisterHandler(a.Router)
-	a.Handler.RegisterStatic(a.Router)
 	serverAdress := a.Config.ServiceHost + ":" + strconv.Itoa(a.Config.ServicePort)
 	if err := a.Router.Run(serverAdress); err != nil {
 		a.Logger.Fatalln(err)

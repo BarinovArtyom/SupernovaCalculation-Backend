@@ -62,8 +62,7 @@ func (h *Handler) GetCurrentEnergyCalculations(ctx *gin.Context) {
 		}
 	}
 
-	ctx.HTML(http.StatusOK, "energycalculations.tmpl", gin.H{
-		"Title":        current_star.Name,
+	ctx.JSON(http.StatusOK, gin.H{
 		"current_star": current_star,
 		"scopes":       scopesWithCalcs,
 	})
